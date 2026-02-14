@@ -48,7 +48,7 @@ class _MyMasjidState extends State<MyMasjid> {
                         Expanded(
                           flex: 13,
                           child: Padding(
-                            padding: EdgeInsets.fromLTRB(0.w, 2.w, 2.w, 1.w),
+                            padding: EdgeInsets.fromLTRB(0.w, 2.w, 2.w, 4.w),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -57,15 +57,17 @@ class _MyMasjidState extends State<MyMasjid> {
                                   style: TextStyle(
                                     fontSize: 8.sp,
                                     color: Colors.black,
+                                    height: 2.h
                                   ),
                                 ),
-                                //SizedBox(height: 1.h),
+
                                 Text(
                                   "Your Masjid",
                                   style: TextStyle(
                                     fontSize: 13.sp,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
+                                    height: 1.h
                                   ),
                                 ),
                                 GridView.builder(
@@ -95,10 +97,12 @@ class _MyMasjidState extends State<MyMasjid> {
 
                                     return Row(
                                       children: [
-                                        Icon(
-                                          icons[index],
-                                          size: 8.sp,
-                                          color: Colors.blue,
+                                        Container(
+                                          child: Icon(
+                                            icons[index],
+                                            size: 8.sp,
+                                            color: Colors.blue,
+                                          ),
                                         ),
                                         SizedBox(width: 1.w),
 
@@ -180,98 +184,70 @@ class _MyMasjidState extends State<MyMasjid> {
                                         ),
                                       ],
                                     ),
-                                    // Expanded(
-                                    //   child: Row(
-                                    //     crossAxisAlignment:
-                                    //         CrossAxisAlignment.start,
-                                    //     children: [
-                                    //       /// 🔹 QR + Scan Text
-                                    //       Column(
-                                    //         mainAxisSize: MainAxisSize.min,
-                                    //         children: [
-                                    //           QrImageView(
-                                    //             data: "https://google.com",
-                                    //             version: QrVersions.auto,
-                                    //             size: 20.w,
-                                    //           ),
-                                    //
-                                    //           SizedBox(height: 2.h),
-                                    //
-                                    //           Text(
-                                    //             "SCAN TO DOWNLOAD",
-                                    //             style: TextStyle(
-                                    //               fontSize: 5.sp,
-                                    //               color: Colors.black54,
-                                    //             ),
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //
-                                    //       SizedBox(width: 4.w),
-                                    //
-                                    //       /// 🔹 Store Buttons (Horizontal)
-                                    //       Expanded(
-                                    //         child: Row(
-                                    //           children: [
-                                    //             Expanded(
-                                    //               child: Image.asset(
-                                    //                 'assets/images/app_store_pic.png',
-                                    //                 height: 10.h,
-                                    //                 fit: BoxFit.contain,
-                                    //               ),
-                                    //             ),
-                                    //
-                                    //             SizedBox(width: 2.w),
-                                    //
-                                    //             Expanded(
-                                    //               child: Image.asset(
-                                    //                 'assets/images/play_store_pic.png',
-                                    //                 height: 10.h,
-                                    //                 fit: BoxFit.contain,
-                                    //               ),
-                                    //             ),
-                                    //           ],
-                                    //         ),
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    // ),
+
                                   ],
                                 ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                                Expanded(
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
 
-                                    /// 🔹 QR + Scan Text
-                                    Column(
-                                      mainAxisSize: MainAxisSize.min,   // 🔥 MUST
-                                      children: [
+                                      /// 🔹 QR + Scan Text
+                                      Column(
+                                        mainAxisSize: MainAxisSize.min,   // 🔥 MUST
+                                        children: [
 
-                                        QrImageView(
-                                          data: "https://google.com",
-                                          version: QrVersions.auto,
-                                          size: 25.w,
-                                        ),
-
-                                        SizedBox(height: 1.h),
-
-                            // 🔥 Prevent text overflow
-
-                                        Text(
-                                            "SCAN TO DOWNLOAD",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 3.sp,
-                                              color: Colors.black54,
-                                            ),
+                                          QrImageView(
+                                            data: "https://google.com",
+                                            version: QrVersions.auto,
+                                            size: 38.w,
                                           ),
 
-                                      ],
-                                    ),
+                                          SizedBox(height: 1.h),
+
+                                                              // 🔥 Prevent text overflow
+
+                                          Text(
+                                              "SCAN TO DOWNLOAD",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 3.sp,
+                                                color: Colors.black54,
+                                              ),
+                                            ),
+
+                                        ],
+                                      ),
+                                      SizedBox(width: 10.w),
+                                      Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+
+                                            Image.asset(
+                                              'assets/images/app_store_pic.png',
+                                              height: 20.h,
+                                              fit: BoxFit.contain,
+                                            ),
+
+                                            SizedBox(width: 6.w),
+
+                                            Image.asset(
+                                              'assets/images/play_store_pic.png',
+                                              height: 20.h,
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
 
 
 
-                                  ],
+
+
+                                    ],
+                                  ),
                                 )
 
 
