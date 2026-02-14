@@ -27,268 +27,341 @@ class _MyMasjidState extends State<MyMasjid> {
                     flex: 23,
                     child: Row(
                       children: [
-                        /// Mobile icon section
                         Expanded(
-                          flex: 10,
-                          child: Center(
-                            child: Icon(
-                              Icons.phone_iphone,
-                              size: 90.sp,
-                              color: Colors.grey.shade400,
+                          flex: 23,
+                          child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 4.w,
+                              vertical: 6.h,
                             ),
-                          ),
-                        ),
+                            color: Colors.white,
 
-                        SizedBox(
-                          width: 2.w,
-                          child: Container(color: Colors.green),
-                        ),
-
-                        /// Text section
-                        Expanded(
-                          flex: 13,
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(0.w, 2.w, 2.w, 4.w),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+
+                                /// 🔵 BISMILLAH
+                                FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    "In the Name of Allah, the Most Beneficent, the Most Merciful.",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 7.sp,
+                                      color: Colors.black87,
+                                      height: 1.3,
+                                    ),
+                                  ),
+                                ),
+
+                                /// 🔵 AYAT TEXT
+                                Expanded(
+                                  child: Center(
+                                    child: Text(
+                                      "Why did they not humble themselves when We made them suffer? "
+                                          "Instead, their hearts were hardened, and Satan made their "
+                                          "misdeeds appealing to them.",
+
+                                      textAlign: TextAlign.center,
+
+                                      style: TextStyle(
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black87,
+                                        height: 1.4,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                /// 🔵 REFERENCE
                                 Text(
-                                  "STAY CONNECTED WITH",
+                                  "Qur'an 6:43",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 8.sp,
-                                    color: Colors.black,
-                                    height: 2.h
+                                    color: Colors.black54,
+                                    height: 1,
                                   ),
                                 ),
-
-                                Text(
-                                  "Your Masjid",
-                                  style: TextStyle(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    height: 1.h
-                                  ),
-                                ),
-                                GridView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: 4,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 6,
-                                      ),
-                                  itemBuilder: (context, index) {
-                                    List titles = [
-                                      "Prayer Timetable",
-                                      "Announcements",
-                                      "Donations",
-                                      "Events & More",
-                                    ];
-
-                                    List icons = [
-                                      Icons.access_time,
-                                      Icons.campaign,
-                                      Icons.volunteer_activism,
-                                      Icons.event,
-                                    ];
-
-                                    return Row(
-                                      children: [
-                                        Container(
-                                          child: Icon(
-                                            icons[index],
-                                            size: 8.sp,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                        SizedBox(width: 1.w),
-
-                                        Text(
-                                          titles[index],
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 4.sp,
-                                            color: Colors.blue,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ),
-                                SizedBox(height: 1.w),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    /// 🔹 Logo
-                                    Container(
-                                      child: Image.asset(
-                                        'assets/images/athan.webp',
-                                        height: 30.h,
-                                        width: 30.w,
-                                        fit: BoxFit.contain,
-                                      ),
-                                      color: Colors.red,
-                                    ),
-
-                                    SizedBox(width: 2.w),
-
-                                    /// 🔹 Text Area
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        DefaultTextStyle(
-                                          style: TextStyle(
-                                            fontSize: 6.sp,
-                                            color: Colors.black,
-                                          ),
-                                          child: Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                TextSpan(text: 'Download the '),
-                                                TextSpan(
-                                                  text: 'Athan+ phone app',
-                                                  style: TextStyle(
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-
-                                        SizedBox(height: 1.h),
-
-                                        DefaultTextStyle(
-                                          style: TextStyle(
-                                            fontSize: 5.sp,
-                                            color: Colors.black,
-                                          ),
-                                          child: Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                TextSpan(text: 'SEARCH FOR '),
-                                                TextSpan(
-                                                  text: 'Athan+ MASJIDAL',
-                                                  style: TextStyle(
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-
-                                  ],
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-
-                                      /// 🔹 QR + Scan Text
-                                      Column(
-                                        mainAxisSize: MainAxisSize.min,   // 🔥 MUST
-                                        children: [
-
-                                          QrImageView(
-                                            data: "https://google.com",
-                                            version: QrVersions.auto,
-                                            size: 38.w,
-                                          ),
-
-                                          SizedBox(height: 1.h),
-
-                                                              // 🔥 Prevent text overflow
-
-                                          Text(
-                                              "SCAN TO DOWNLOAD",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 3.sp,
-                                                color: Colors.black54,
-                                              ),
-                                            ),
-
-                                        ],
-                                      ),
-                                      SizedBox(width: 10.w),
-                                      Align(
-                                        alignment: Alignment.bottomCenter,
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-
-                                            Image.asset(
-                                              'assets/images/app_store_pic.png',
-                                              height: 20.h,
-                                              fit: BoxFit.contain,
-                                            ),
-
-                                            SizedBox(width: 6.w),
-
-                                            Image.asset(
-                                              'assets/images/play_store_pic.png',
-                                              height: 20.h,
-                                              fit: BoxFit.contain,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-
-
-
-
-
-                                    ],
-                                  ),
-                                )
-
-
-
                               ],
                             ),
                           ),
                         ),
+
+
+
+
+
+
+                        /// Mobile icon section
+                        /// Don't Delete this
+                        // Expanded(
+                        //   flex: 10,
+                        //   child: Center(
+                        //     child: Icon(
+                        //       Icons.phone_iphone,
+                        //       size: 90.sp,
+                        //       color: Colors.grey.shade400,
+                        //     ),
+                        //   ),
+                        // ),
+
+
+
+                        /// Text section
+                        /// Don't Delete this
+                        // Expanded(
+                        //   flex: 13,
+                        //   child: Padding(
+                        //     padding: EdgeInsets.fromLTRB(0.w, 2.w, 2.w, 4.w),
+                        //     child: Column(
+                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                        //       children: [
+                        //         Text(
+                        //           "STAY CONNECTED WITH",
+                        //           style: TextStyle(
+                        //             fontSize: 8.sp,
+                        //             color: Colors.black,
+                        //             height: 2.h,
+                        //           ),
+                        //         ),
+                        //
+                        //         Text(
+                        //           "Your Masjid",
+                        //           style: TextStyle(
+                        //             fontSize: 13.sp,
+                        //             fontWeight: FontWeight.bold,
+                        //             color: Colors.black,
+                        //             height: 1.h,
+                        //           ),
+                        //         ),
+                        //         GridView.builder(
+                        //           padding: EdgeInsets.zero,
+                        //           shrinkWrap: true,
+                        //           physics: NeverScrollableScrollPhysics(),
+                        //           itemCount: 4,
+                        //           gridDelegate:
+                        //               SliverGridDelegateWithFixedCrossAxisCount(
+                        //                 crossAxisCount: 2,
+                        //                 childAspectRatio: 6,
+                        //               ),
+                        //           itemBuilder: (context, index) {
+                        //             List titles = [
+                        //               "Prayer Timetable",
+                        //               "Announcements",
+                        //               "Donations",
+                        //               "Events & More",
+                        //             ];
+                        //
+                        //             List icons = [
+                        //               Icons.access_time,
+                        //               Icons.campaign,
+                        //               Icons.volunteer_activism,
+                        //               Icons.event,
+                        //             ];
+                        //
+                        //             return Row(
+                        //               children: [
+                        //                 Container(
+                        //                   child: Icon(
+                        //                     icons[index],
+                        //                     size: 8.sp,
+                        //                     color: Colors.blue,
+                        //                   ),
+                        //                 ),
+                        //                 SizedBox(width: 1.w),
+                        //
+                        //                 Text(
+                        //                   titles[index],
+                        //                   style: TextStyle(
+                        //                     fontWeight: FontWeight.w600,
+                        //                     fontSize: 4.sp,
+                        //                     color: Colors.blue,
+                        //                   ),
+                        //                   overflow: TextOverflow.ellipsis,
+                        //                 ),
+                        //               ],
+                        //             );
+                        //           },
+                        //         ),
+                        //         SizedBox(height: 1.w),
+                        //         Row(
+                        //           crossAxisAlignment: CrossAxisAlignment.start,
+                        //           children: [
+                        //             /// 🔹 Logo
+                        //             Container(
+                        //               child: Image.asset(
+                        //                 'assets/images/athan.webp',
+                        //                 height: 30.h,
+                        //                 width: 30.w,
+                        //                 fit: BoxFit.contain,
+                        //               ),
+                        //               color: Colors.red,
+                        //             ),
+                        //
+                        //             SizedBox(width: 2.w),
+                        //
+                        //             /// 🔹 Text Area
+                        //             Column(
+                        //               crossAxisAlignment:
+                        //                   CrossAxisAlignment.start,
+                        //               children: [
+                        //                 DefaultTextStyle(
+                        //                   style: TextStyle(
+                        //                     fontSize: 6.sp,
+                        //                     color: Colors.black,
+                        //                   ),
+                        //                   child: Text.rich(
+                        //                     TextSpan(
+                        //                       children: [
+                        //                         TextSpan(text: 'Download the '),
+                        //                         TextSpan(
+                        //                           text: 'Athan+ phone app',
+                        //                           style: TextStyle(
+                        //                             color: Colors.blue,
+                        //                           ),
+                        //                         ),
+                        //                       ],
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //
+                        //                 SizedBox(height: 1.h),
+                        //
+                        //                 DefaultTextStyle(
+                        //                   style: TextStyle(
+                        //                     fontSize: 5.sp,
+                        //                     color: Colors.black,
+                        //                   ),
+                        //                   child: Text.rich(
+                        //                     TextSpan(
+                        //                       children: [
+                        //                         TextSpan(text: 'SEARCH FOR '),
+                        //                         TextSpan(
+                        //                           text: 'Athan+ MASJIDAL',
+                        //                           style: TextStyle(
+                        //                             color: Colors.blue,
+                        //                           ),
+                        //                         ),
+                        //                       ],
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         Expanded(
+                        //           child: Row(
+                        //             crossAxisAlignment:
+                        //                 CrossAxisAlignment.start,
+                        //             children: [
+                        //               /// 🔹 QR + Scan Text
+                        //               Column(
+                        //                 mainAxisSize:
+                        //                     MainAxisSize.min, // 🔥 MUST
+                        //                 children: [
+                        //                   QrImageView(
+                        //                     data: "https://google.com",
+                        //                     version: QrVersions.auto,
+                        //                     size: 35.w,
+                        //                   ),
+                        //
+                        //                   SizedBox(height: 1.h),
+                        //
+                        //                   // 🔥 Prevent text overflow
+                        //                   Text(
+                        //                     "SCAN TO DOWNLOAD",
+                        //                     textAlign: TextAlign.center,
+                        //                     style: TextStyle(
+                        //                       fontSize: 3.sp,
+                        //                       color: Colors.black54,
+                        //                     ),
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //               SizedBox(width: 10.w),
+                        //               Align(
+                        //                 alignment: Alignment.bottomCenter,
+                        //                 child: Row(
+                        //                   mainAxisSize: MainAxisSize.min,
+                        //                   children: [
+                        //                     Image.asset(
+                        //                       'assets/images/app_store_pic.png',
+                        //                       height: 20.h,
+                        //                       fit: BoxFit.contain,
+                        //                     ),
+                        //
+                        //                     SizedBox(width: 6.w),
+                        //
+                        //                     Image.asset(
+                        //                       'assets/images/play_store_pic.png',
+                        //                       height: 20.h,
+                        //                       fit: BoxFit.contain,
+                        //                     ),
+                        //                   ],
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
 
                   /// PRAYER TABLE SECTION
-                  Expanded(
-                    flex: 10,
-                    child: Container(
-                      color: Colors.green,
-                      padding: EdgeInsets.all(3.w),
-                      child: Column(
-                        children: List.generate(4, (row) {
-                          return Expanded(
-                            child: Row(
-                              children: List.generate(6, (col) {
-                                return Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      "TEXT",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 6.sp,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }),
+            Expanded(
+                flex: 10,
+                child: Container(
+                    color: Colors.green,
+                    padding: EdgeInsets.all(2.w),
+
+                    child: LayoutBuilder(
+                        builder: (context, constraints) {
+
+                          double rowHeight = constraints.maxHeight / 4;
+                          return Table(
+
+                            border: TableBorder.all(
+                              color: Colors.white30,
+                              width: 1,
                             ),
+
+                            columnWidths: const {
+                              0: FlexColumnWidth(1.5),
+                              1: FlexColumnWidth(),
+                              2: FlexColumnWidth(),
+                              3: FlexColumnWidth(),
+                              4: FlexColumnWidth(),
+                              5: FlexColumnWidth(),
+                            },
+
+                            children: [
+
+                              tableRow(["", "FAJR", "DHUHR", "ASR", "MAGHRIB", "ISHA"], rowHeight, true),
+
+                              tableRow(["STARTS", "5:00", "11:45", "3:35", "5:11", "6:30"], rowHeight),
+
+                              tableRow(["ATHAN", "5:10", "12:45", "3:40", "5:13", "7:00"], rowHeight),
+
+                              tableRow(["IQAMAH", "5:40", "1:15", "4:00", "5:21", "7:30"], rowHeight),
+                            ],
                           );
-                        }),
-                      ),
+                        },
                     ),
-                  ),
+                ),
+            ),
+
+
+
+
+
                 ],
               ),
             ),
@@ -300,10 +373,7 @@ class _MyMasjidState extends State<MyMasjid> {
             Expanded(
               flex: 5,
               child: Padding(
-                padding: EdgeInsets.only(
-                  left: 2.w,
-                  right: 2.w
-                ),
+                padding: EdgeInsets.only(left: 2.w, right: 2.w),
                 child: Container(
                   color: Colors.white,
                   child: Column(
@@ -316,12 +386,18 @@ class _MyMasjidState extends State<MyMasjid> {
                               Text(
                                 "JUMADA AL-THANI 1",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 7.sp, color: Colors.black),
+                                style: TextStyle(
+                                  fontSize: 7.sp,
+                                  color: Colors.black,
+                                ),
                               ),
                               Text(
                                 "SUNDAY, NOV 23",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 7.sp, color: Colors.black),
+                                style: TextStyle(
+                                  fontSize: 7.sp,
+                                  color: Colors.black,
+                                ),
                               ),
                             ],
                           ),
@@ -384,35 +460,30 @@ class _MyMasjidState extends State<MyMasjid> {
                               children: [
                                 Column(
                                   children: [
-                                    Text('1:00 PM',
+                                    Text(
+                                      '1:00 PM',
                                       style: TextStyle(fontSize: 7.sp),
-
-                                    ),Text('STARTS',
-                                      style: TextStyle(fontSize: 5.sp),
-
                                     ),
-
-
-
+                                    Text(
+                                      'STARTS',
+                                      style: TextStyle(fontSize: 5.sp),
+                                    ),
                                   ],
                                 ),
                                 Column(
                                   children: [
-                                    Text('1:30 PM',
+                                    Text(
+                                      '1:30 PM',
                                       style: TextStyle(fontSize: 7.sp),
-
-                                    ),Text("JUMU'AH 1",
-                                      style: TextStyle(fontSize: 5.sp),
-
                                     ),
-
-
-
+                                    Text(
+                                      "JUMU'AH 1",
+                                      style: TextStyle(fontSize: 5.sp),
+                                    ),
                                   ],
                                 ),
                               ],
-                            )
-
+                            ),
                           ],
                         ),
                       ),
@@ -427,7 +498,9 @@ class _MyMasjidState extends State<MyMasjid> {
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.wb_twighlight, size: 12.sp,
+                                  Icon(
+                                    Icons.wb_twighlight,
+                                    size: 12.sp,
                                     color: Colors.yellow,
                                   ),
                                   SizedBox(height: 1.h),
@@ -440,12 +513,14 @@ class _MyMasjidState extends State<MyMasjid> {
                                     style: TextStyle(fontSize: 3.sp),
                                   ),
                                 ],
-                              ),Column(
+                              ),
+                              Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.free_breakfast, size: 12.sp,
-                                  color: Colors.blue,
-
+                                  Icon(
+                                    Icons.free_breakfast,
+                                    size: 12.sp,
+                                    color: Colors.blue,
                                   ),
                                   SizedBox(height: 1.h),
                                   Text(
@@ -458,14 +533,11 @@ class _MyMasjidState extends State<MyMasjid> {
                                   ),
                                 ],
                               ),
-
                             ],
                           ),
                         ),
                       ),
-                      Divider(
-                        height: 2.h,
-                      ),
+                      Divider(height: 2.h),
                       Expanded(
                         flex: 10,
                         child: Container(
@@ -488,7 +560,8 @@ class _MyMasjidState extends State<MyMasjid> {
                                     style: TextStyle(fontSize: 3.sp),
                                   ),
                                 ],
-                              ),Column(
+                              ),
+                              Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.nights_stay, size: 12.sp),
@@ -503,7 +576,6 @@ class _MyMasjidState extends State<MyMasjid> {
                                   ),
                                 ],
                               ),
-
                             ],
                           ),
                         ),
@@ -519,3 +591,35 @@ class _MyMasjidState extends State<MyMasjid> {
     );
   }
 }
+
+TableRow tableRow(List<String> data, double height, [bool isHeader = false]) {
+
+  return TableRow(
+    children: data.map((text) {
+
+      return SizedBox(    // 🔥 THIS IS THE MAGIC
+        height: height,
+
+        child: Center(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: isHeader ? 5.sp : 9.sp,
+                fontWeight:
+                isHeader ? FontWeight.bold : FontWeight.w600,
+                height: 1,
+              ),
+            ),
+          ),
+        ),
+      );
+
+    }).toList(),
+  );
+}
+
+
