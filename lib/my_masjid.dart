@@ -299,95 +299,217 @@ class _MyMasjidState extends State<MyMasjid> {
             /// RIGHT TIME SECTION
             Expanded(
               flex: 5,
-              child: Container(
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Center(
-                        child: Text(
-                          "JUMADA AL-THANI 1\nSUNDAY, NOV 23",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 5.sp, color: Colors.black),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 1.w,
-                      child: Center(child: Container(color: Colors.black)),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Center(
-                        child: Text(
-                          "7:49 PM",
-                          style: TextStyle(
-                            fontSize: 5.sp,
-                            fontWeight: FontWeight.bold,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 2.w,
+                  right: 2.w
+                ),
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 8,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                "JUMADA AL-THANI 1",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 7.sp, color: Colors.black),
+                              ),
+                              Text(
+                                "SUNDAY, NOV 23",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 7.sp, color: Colors.black),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          "NEXT IQAMAH IN\n9 HR 51 MIN",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 6.sp),
-                        ),
+                      SizedBox(
+                        width: 180.h,
+                        height: 1.w,
+                        child: Center(child: Container(color: Colors.black)),
                       ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          "JUMU'AH\n1:00 PM | 1:30 PM",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 5.sp),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.wb_sunny, size: 5.sp),
-                                SizedBox(height: 4.h),
-                                Text(
-                                  "6:18 AM",
-                                  style: TextStyle(fontSize: 5.sp),
-                                ),
-                                Text(
-                                  "SUNRISE",
-                                  style: TextStyle(fontSize: 5.sp),
-                                ),
-                              ],
+                      Expanded(
+                        flex: 8,
+                        child: Center(
+                          child: Text(
+                            "7:49 PM",
+                            style: TextStyle(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 9,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                "NEXT IQAMAH IN",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 7.sp),
+                              ),
+                              Text(
+                                "9 HR 51 MIN",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 10.sp),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 180.h,
+                        height: 1.w,
+                        child: Center(child: Container(color: Colors.black)),
+                      ),
+                      Expanded(
+                        flex: 11,
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                "JUMU'AH",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 8.sp),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Icon(Icons.nights_stay, size: 5.sp),
-                                SizedBox(height: 4.h),
-                                Text(
-                                  "5:11 PM",
-                                  style: TextStyle(fontSize: 5.sp),
+                                Column(
+                                  children: [
+                                    Text('1:00 PM',
+                                      style: TextStyle(fontSize: 7.sp),
+
+                                    ),Text('STARTS',
+                                      style: TextStyle(fontSize: 5.sp),
+
+                                    ),
+
+
+
+                                  ],
                                 ),
-                                Text(
-                                  "SUNSET",
-                                  style: TextStyle(fontSize: 5.sp),
+                                Column(
+                                  children: [
+                                    Text('1:30 PM',
+                                      style: TextStyle(fontSize: 7.sp),
+
+                                    ),Text("JUMU'AH 1",
+                                      style: TextStyle(fontSize: 5.sp),
+
+                                    ),
+
+
+
+                                  ],
                                 ),
                               ],
-                            ),
-                          ),
-                        ],
+                            )
+
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        flex: 10,
+                        child: Container(
+                          color: Colors.green,
+
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.wb_twighlight, size: 12.sp,
+                                    color: Colors.yellow,
+                                  ),
+                                  SizedBox(height: 1.h),
+                                  Text(
+                                    "6:18 AM",
+                                    style: TextStyle(fontSize: 6.sp),
+                                  ),
+                                  Text(
+                                    "SEHRI",
+                                    style: TextStyle(fontSize: 3.sp),
+                                  ),
+                                ],
+                              ),Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.free_breakfast, size: 12.sp,
+                                  color: Colors.blue,
+
+                                  ),
+                                  SizedBox(height: 1.h),
+                                  Text(
+                                    "5:11 PM",
+                                    style: TextStyle(fontSize: 6.sp),
+                                  ),
+                                  Text(
+                                    "SUNSET",
+                                    style: TextStyle(fontSize: 3.sp),
+                                  ),
+                                ],
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ),
+                      Divider(
+                        height: 2.h,
+                      ),
+                      Expanded(
+                        flex: 10,
+                        child: Container(
+                          color: Colors.green,
+
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.wb_sunny, size: 12.sp),
+                                  SizedBox(height: 1.h),
+                                  Text(
+                                    "6:18 AM",
+                                    style: TextStyle(fontSize: 6.sp),
+                                  ),
+                                  Text(
+                                    "SUNRISE",
+                                    style: TextStyle(fontSize: 3.sp),
+                                  ),
+                                ],
+                              ),Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.nights_stay, size: 12.sp),
+                                  SizedBox(height: 1.h),
+                                  Text(
+                                    "5:11 PM",
+                                    style: TextStyle(fontSize: 6.sp),
+                                  ),
+                                  Text(
+                                    "SUNSET",
+                                    style: TextStyle(fontSize: 3.sp),
+                                  ),
+                                ],
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
