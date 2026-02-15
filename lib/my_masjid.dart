@@ -335,21 +335,23 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                   ),
 
                   /// PRAYER TABLE SECTION
-            Expanded(
-                flex: 10,
-                child: Container(
-                    color: Colors.green,
-                    padding: EdgeInsets.all(2.w),
+                  Expanded(
+                    flex: 10,
+                    child: Container(
+                      color: Colors.green,
+                      padding: EdgeInsets.all(2.w),
 
-                    child: LayoutBuilder(
+                      child: LayoutBuilder(
                         builder: (context, constraints) {
 
-                          double rowHeight = constraints.maxHeight / 4;
+                          // ✅ NOW TOTAL ROW = 2
+                          double rowHeight = constraints.maxHeight / 2;
+
                           return Table(
 
                             border: TableBorder.all(
                               color: Colors.white30,
-                              width: 1,
+                              width: 2.w,
                             ),
 
                             columnWidths: const {
@@ -363,19 +365,24 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
 
                             children: [
 
-                              tableRow(["", "FAJR", "DHUHR", "ASR", "MAGHRIB", "ISHA"], rowHeight, true),
+                              tableRow(
+                                ["", "FAJR", "DHUHR", "ASR", "MAGHRIB", "ISHA"],
+                                rowHeight,
+                                true,
+                              ),
 
-                              tableRow(["STARTS", "5:00", "11:45", "3:35", "5:11", "6:30"], rowHeight),
+                              tableRow(
+                                ["STARTS", "5:00", "11:45", "3:35", "5:11", "6:30"],
+                                rowHeight,
+                              ),
 
-                              tableRow(["ATHAN", "5:10", "12:45", "3:40", "5:13", "7:00"], rowHeight),
-
-                              tableRow(["IQAMAH", "5:40", "1:15", "4:00", "5:21", "7:30"], rowHeight),
                             ],
                           );
                         },
+                      ),
                     ),
-                ),
-            ),
+                  ),
+
 
 
 
@@ -627,7 +634,7 @@ TableRow tableRow(List<String> data, double height, [bool isHeader = false]) {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: isHeader ? 5.sp : 9.sp,
+                fontSize: isHeader ? 7.sp : 9.sp,
                 fontWeight:
                 isHeader ? FontWeight.bold : FontWeight.w600,
                 height: 1,
