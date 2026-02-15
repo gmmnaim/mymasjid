@@ -8,6 +8,7 @@ import 'package:mymasjid/my_masjid.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'features/hadith/hadith_model.dart';
+import 'features/prayer/prayer_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +16,10 @@ void main() async {
   Hive.registerAdapter(HadithModelAdapter());
 
   await Hive.openBox<HadithModel>('hadithBox');
+  Hive.registerAdapter(PrayerModelAdapter());
+
+  await Hive.openBox<PrayerModel>('prayerBox');
+
 
 
   //await Hive.openBox('prayer_box');
