@@ -7,6 +7,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'features/hadith/auto_scroll_text.dart';
 import 'features/hadith/hadith_provider.dart';
 import 'features/prayer/prayer_provider.dart';
+import 'next_prayer_calculator.dart';
 
 class MyMasjid extends ConsumerStatefulWidget {
   const MyMasjid({super.key});
@@ -287,15 +288,17 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                           child: Column(
                             children: [
                               Text(
-                                "NEXT IQAMAH IN",
+                                "NEXT PRAYER IN",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontSize: 6.sp),
                               ),
+
                               Text(
-                                "9 HR 51 MIN",
+                                NextPrayerCalculator.getNextPrayerCountdown(prayer),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontSize: 9.sp),
                               ),
+
                             ],
                           ),
                         ),
@@ -306,7 +309,7 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                         child: Center(child: Container(color: Colors.black)),
                       ),
                       Expanded(
-                        flex: 11,
+                        flex: 9,
                         child: Column(
                           children: [
                             Center(
@@ -316,35 +319,47 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                 style: TextStyle(fontSize: 6.sp),
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      '1:00 PM',
-                                      style: TextStyle(fontSize: 7.sp),
-                                    ),
-                                    Text(
-                                      'STARTS',
-                                      style: TextStyle(fontSize: 5.sp),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      '1:30 PM',
-                                      style: TextStyle(fontSize: 7.sp),
-                                    ),
-                                    Text(
-                                      "JUMU'AH 1",
-                                      style: TextStyle(fontSize: 5.sp),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            Center(
+                              child: Text(
+                                  prayer?.jumuah ?? "--",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 9.sp),
+                              ),
                             ),
+
+
+
+
+
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            //   children: [
+                            //     Column(
+                            //       children: [
+                            //         Text(
+                            //           '1:00 PM',
+                            //           style: TextStyle(fontSize: 7.sp),
+                            //         ),
+                            //         Text(
+                            //           'STARTS',
+                            //           style: TextStyle(fontSize: 5.sp),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //     Column(
+                            //       children: [
+                            //         Text(
+                            //           '1:30 PM',
+                            //           style: TextStyle(fontSize: 7.sp),
+                            //         ),
+                            //         Text(
+                            //           "JUMU'AH 1",
+                            //           style: TextStyle(fontSize: 5.sp),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),
@@ -368,13 +383,13 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    Icons.wb_twighlight,
+                                    Icons.nightlight_round,
                                     size: 12.sp,
-                                    color: Colors.yellow,
+                                    color: Color(0xFFE1F5FE),
                                   ),
                                   SizedBox(height: 1.h),
                                   Text(
-                                    "6:18 AM",
+                                      prayer?.saheri ?? "--",
                                     style: TextStyle(fontSize: 6.sp),
                                   ),
                                   Text(
@@ -387,17 +402,17 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    Icons.free_breakfast,
+                                    Icons.restaurant,
                                     size: 12.sp,
-                                    color: Colors.blue,
+                                    color: Color(0xFFFFF9C4),
                                   ),
                                   SizedBox(height: 1.h),
                                   Text(
-                                    "5:11 PM",
+                                      prayer?.iftar ?? "--",
                                     style: TextStyle(fontSize: 6.sp),
                                   ),
                                   Text(
-                                    "SUNSET",
+                                    "IFTAR",
                                     style: TextStyle(fontSize: 3.sp),
                                   ),
                                 ],
@@ -419,16 +434,21 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                             )
                           ),
 
-                          child: Row(
+                           child:
+
+                        Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.wb_sunny, size: 12.sp),
+                                  Icon(Icons.wb_sunny_outlined, size: 12.sp,
+                                  color: Colors.amberAccent,
+
+                                  ),
                                   SizedBox(height: 1.h),
                                   Text(
-                                    "6:18 AM",
+                                      prayer?.sunrise ?? "--",
                                     style: TextStyle(fontSize: 6.sp),
                                   ),
                                   Text(
@@ -440,14 +460,16 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.nights_stay, size: 12.sp),
+                                  Icon(Icons.brightness_3, size: 12.sp,
+                                  color: Color(0xFFFFAB91),
+                                  ),
                                   SizedBox(height: 1.h),
                                   Text(
-                                    "5:11 PM",
+                                      prayer?.sunset ?? "--",
                                     style: TextStyle(fontSize: 6.sp),
                                   ),
                                   Text(
-                                    "SUNSET",
+                                      "SUNSET",
                                     style: TextStyle(fontSize: 3.sp),
                                   ),
                                 ],
