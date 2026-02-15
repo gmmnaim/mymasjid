@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class MyMasjid extends StatefulWidget {
+import 'features/hadith/auto_scroll_text.dart';
+import 'features/hadith/hadith_provider.dart';
+
+class MyMasjid extends ConsumerStatefulWidget {
   const MyMasjid({super.key});
 
   @override
-  State<MyMasjid> createState() => _MyMasjidState();
+  ConsumerState<MyMasjid> createState() => _MyMasjidState();
 }
 
-class _MyMasjidState extends State<MyMasjid> {
+
+class _MyMasjidState extends ConsumerState<MyMasjid> {
+
   @override
   Widget build(BuildContext context) {
+    final hadith = ref.watch(hadithProvider);
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(8.w),
@@ -45,7 +53,10 @@ class _MyMasjidState extends State<MyMasjid> {
                                 FittedBox(
                                   fit: BoxFit.scaleDown,
                                   child: Text(
-                                    "In the Name of Allah, the Most Beneficent, the Most Merciful.",
+                                    //englishNarrator
+                                    hadith?.englishNarrator ?? "",
+
+                                    // "In the Name of Allah, the Most Beneficent, the Most Merciful.",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 7.sp,
@@ -58,13 +69,8 @@ class _MyMasjidState extends State<MyMasjid> {
                                 /// 🔵 AYAT TEXT
                                 Expanded(
                                   child: Center(
-                                    child: Text(
-                                      "Why did they not humble themselves when We made them suffer? "
-                                          "Instead, their hearts were hardened, and Satan made their "
-                                          "misdeeds appealing to them.",
-
-                                      textAlign: TextAlign.center,
-
+                                    child: AutoScrollText(
+                                      text: hadith?.hadithEnglish ?? "",
                                       style: TextStyle(
                                         fontSize: 11.sp,
                                         fontWeight: FontWeight.w500,
@@ -73,11 +79,24 @@ class _MyMasjidState extends State<MyMasjid> {
                                       ),
                                     ),
                                   ),
+
+
+
+
+
+                                  // "Why did they not humble themselves when We made them suffer? "
+                                      //     "Instead, their hearts were hardened, and Satan made their "
+                                      //     "misdeeds appealing to them.",
+
+
                                 ),
 
                                 /// 🔵 REFERENCE
                                 Text(
-                                  "Qur'an 6:43",
+                                  //bookSlug
+                                  hadith?.bookSlug ?? "",
+
+                                  // "Qur'an 6:43",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 8.sp,
