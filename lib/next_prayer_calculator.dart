@@ -2,40 +2,27 @@ import 'package:intl/intl.dart';
 import 'features/prayer/prayer_model.dart';
 
 class NextPrayerCalculator {
-
-  static String getNextPrayerCountdown(PrayerModel? prayer){
-
-    if(prayer == null) return "--";
+  static String getNextPrayerCountdown(PrayerModel? prayer) {
+    if (prayer == null) return "--";
 
     DateTime now = DateTime.now();
 
     String today = DateFormat('EEEE').format(now);
 
     List<String> prayerTimes = [
-
       prayer.fajr,
 
-      today == "Friday"
-          ? prayer.jumuah
-          : prayer.dhuhr,
+      today == "Friday" ? prayer.jumuah : prayer.dhuhr,
 
       prayer.asr,
       prayer.maghrib,
       prayer.isha,
     ];
 
-    List<DateTime> parsedTimes = prayerTimes.map((time){
-
+    List<DateTime> parsedTimes = prayerTimes.map((time) {
       DateTime parsed = DateFormat("hh:mm a").parse(time);
 
-      return DateTime(
-        now.year,
-        now.month,
-        now.day,
-        parsed.hour,
-        parsed.minute,
-      );
-
+      return DateTime(now.year, now.month, now.day, parsed.hour, parsed.minute);
     }).toList();
 
     /// Next Day Fajr add
@@ -51,10 +38,8 @@ class NextPrayerCalculator {
       ),
     );
 
-    for(final t in parsedTimes){
-
-      if(t.isAfter(now)){
-
+    for (final t in parsedTimes) {
+      if (t.isAfter(now)) {
         final diff = t.difference(now);
 
         final hr = diff.inHours;
@@ -65,5 +50,12 @@ class NextPrayerCalculator {
     }
 
     return "--";
+  }
+
+  static Stream<String> nextPrayerStream(PrayerModel? prayer) {
+    return Stream.periodic(
+      const Duration(seconds: 1),
+      (_) => getNextPrayerCountdown(prayer),
+    );
   }
 }

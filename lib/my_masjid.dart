@@ -6,6 +6,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import 'features/hadith/auto_scroll_text.dart';
 import 'features/hadith/hadith_provider.dart';
+import 'features/prayer/prayer_model.dart';
 import 'features/prayer/prayer_provider.dart';
 import 'next_prayer_calculator.dart';
 
@@ -18,6 +19,12 @@ class MyMasjid extends ConsumerStatefulWidget {
 
 
 class _MyMasjidState extends ConsumerState<MyMasjid> {
+
+
+
+
+
+
   Stream<DateTime> getTimeStream() {
 
     return Stream.periodic(
@@ -25,6 +32,7 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
           (_)=> DateTime.now(),
     );
   }
+
 
 
 
@@ -71,7 +79,6 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                     //englishNarrator
                                     hadith?.englishNarrator ?? "",
 
-                                    // "In the Name of Allah, the Most Beneficent, the Most Merciful.",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 7.sp,
@@ -87,7 +94,7 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                     child: AutoScrollText(
                                       text: hadith?.hadithEnglish ?? "",
                                       style: TextStyle(
-                                        fontSize: 11.sp,
+                                        fontSize: 9.sp,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black87,
                                         height: 1.4,
@@ -168,7 +175,7 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                             children: [
 
                               tableRow(
-                                ["", "FAJR", "DHUHR", "ASR", "MAGHRIB", "ISHA"],
+                                ["", "FAJR", "DUHR", "ASR", "MAGHRIB", "ISHA"],
                                 rowHeight,
                                 true,
                               ),
@@ -293,11 +300,22 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                 style: TextStyle(fontSize: 6.sp),
                               ),
 
-                              Text(
-                                NextPrayerCalculator.getNextPrayerCountdown(prayer),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 9.sp),
-                              ),
+                              StreamBuilder<String>(
+
+                                stream: NextPrayerCalculator.nextPrayerStream(prayer),
+
+                                builder: (context, snapshot) {
+
+                                  return Text(
+                                    snapshot.data ?? "--",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 9.sp),
+                                  );
+
+                                },
+
+                              )
+
 
                             ],
                           ),
