@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +18,7 @@ class MyMasjid extends ConsumerStatefulWidget {
 }
 
 class _MyMasjidState extends ConsumerState<MyMasjid> {
+  bool isOn = false;
   @override
   void initState() {
     super.initState();
@@ -28,6 +30,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
     Future.microtask(() {
       ref.read(hadithProvider.notifier).loadHadith();
     });
+
+
+
   }
 
   Stream<DateTime> getTimeStream() {
@@ -38,6 +43,7 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
   Widget build(BuildContext context) {
     final hadith = ref.watch(hadithProvider);
     final prayer = ref.watch(prayerProvider);
+
 
     return Scaffold(
       backgroundColor: const Color(0xFF0B0C10),
@@ -188,7 +194,51 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                           ),
                         ),
                       ),
-                      Expanded(flex: 6, child: Container()),
+                      Expanded(flex: 6, child: Container(
+                        child: Center(
+                          child: Focus(
+                            autofocus: true,
+                            onKeyEvent: (node, event) {
+                              if (event is KeyDownEvent &&
+                                  (event.logicalKey == LogicalKeyboardKey.select ||
+                                      event.logicalKey == LogicalKeyboardKey.enter)) {
+
+                                setState(() {
+                                  isOn = !isOn;
+                                });
+
+                                return KeyEventResult.handled;
+                              }
+                              return KeyEventResult.ignored;
+                            },
+                            child: Switch(
+                              value: isOn,
+                              onChanged: (value) {
+                                setState(() {
+                                  isOn = value;
+                                });
+                              },
+                              activeColor: Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.black
+                                  : Colors.green,
+                              inactiveThumbColor: Colors.white,
+                              activeTrackColor: Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.black54
+                                  : Colors.green.shade300,
+                              inactiveTrackColor: Colors.grey.shade400,
+                            ),
+                          )
+
+
+
+
+
+
+                        ),
+                        
+                        
+                        
+                      )),
                     ],
                   ),
                 ),
