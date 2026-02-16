@@ -20,6 +20,21 @@ class MyMasjid extends ConsumerStatefulWidget {
 
 class _MyMasjidState extends ConsumerState<MyMasjid> {
 
+  @override
+  void initState() {
+    super.initState();
+
+    /// 🔥 FORCE PRAYER API CALL
+    Future.microtask(() {
+      ref.read(prayerProvider.notifier).loadPrayer();
+    });
+
+    /// 🔥 FORCE HADITH API CALL
+    Future.microtask(() {
+      ref.read(hadithProvider.notifier).loadHadith();
+    });
+  }
+
 
 
 
@@ -158,6 +173,10 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
 
                           return Table(
 
+                            // border: TableBorder.all(
+                            //   color: Colors.black,
+                            //   width: 1.w,
+                            // ),
                             border: TableBorder.all(
                               color: Colors.white,
                               width: 1.w,
@@ -175,7 +194,7 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                             children: [
 
                               tableRow(
-                                ["", "FAJR", "DUHR", "ASR", "MAGHRIB", "ISHA"],
+                                ["AWQAT", "FAJR", "DUHR", "ASR", "MAGHRIB", "ISHA"],
                                 rowHeight,
                                 true,
                               ),
