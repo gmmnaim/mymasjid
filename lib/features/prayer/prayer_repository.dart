@@ -15,19 +15,28 @@ class PrayerRepository {
 
       final prayer = PrayerModel.fromJson(data);
 
+      /// 🔥 API SUCCESS → OLD DELETE
+      await box.clear();
+
+      /// 🔥 NEW SAVE
       await box.put('latest', prayer);
 
       return prayer;
 
     }catch(e){
 
+      print("API FAIL → Hive Load");
+
       final offline = box.get('latest');
 
-      if(offline!=null){
+      if(offline != null){
         return offline;
       }else{
-        throw Exception("No Prayer Data");
+        throw Exception("No Internet & No Offline Data");
       }
+
     }
+
   }
+
 }
