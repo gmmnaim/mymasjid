@@ -3,12 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:mymasjid/theme/app_theme.dart';
+import 'package:mymasjid/theme/theme_model.dart';
+import 'package:mymasjid/theme/theme_provider.dart';
 
 import 'features/hadith/auto_scroll_text.dart';
 import 'features/hadith/hadith_provider.dart';
 import 'features/prayer/prayer_model.dart';
 import 'features/prayer/prayer_provider.dart';
 import 'next_prayer_calculator.dart';
+
 
 class MyMasjid extends ConsumerStatefulWidget {
   const MyMasjid({super.key});
@@ -34,12 +38,16 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = ref.watch(themeProvider);
+
     final hadith = ref.watch(hadithProvider);
     final prayer = ref.watch(prayerProvider);
 
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0C10),
+      backgroundColor: theme.bg,
+
+      //backgroundColor: const Color(0xFF0B0C10),
       body: Container(
         // decoration: const BoxDecoration(
         //   gradient: LinearGradient(
@@ -69,7 +77,12 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                             vertical: 6.h,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF0B0C10),
+                            color: theme.bg,
+
+
+
+
+                            //color: const Color(0xFF0B0C10),
                             borderRadius: BorderRadius.circular(15.r),
                           ),
                           child: Column(
@@ -96,7 +109,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                     style: TextStyle(
                                       fontSize: 9.sp,
                                       fontWeight: FontWeight.w500,
-                                      color: Colors.white,
+                                      color: theme.text,
+
+                                      //color: Colors.white,
                                       height: 1.4,
                                     ),
                                   ),
@@ -123,7 +138,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 8.sp,
-                                  color: Colors.white54,
+                                  color: theme.subText,
+
+                                  //color: Colors.white54,
                                   height: 1,
                                 ),
                               ),
@@ -138,7 +155,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                         child: Container(
                           margin: EdgeInsets.only(top: 2.w, right: 4.w),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF1C1F26),
+                            color: theme.card,
+
+                            //color: const Color(0xFF1C1F26),
                             borderRadius: BorderRadius.circular(15.r),
                           ),
                           clipBehavior: Clip.hardEdge,
@@ -183,7 +202,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                       ],
                                       rowHeight,
                                       true,
+                                      theme,   /// 🔥 ADDED
                                     ),
+
                                     tableRowUI(
                                       [
                                         "STARTS",
@@ -195,7 +216,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                       ],
                                       rowHeight,
                                       false,
+                                      theme,   /// 🔥 ADDED
                                     ),
+
                                   ],
                                 ),
                               );
@@ -203,58 +226,126 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                           ),
                         ),
                       ),
-                      Expanded(flex: 6, child: Container(
-                        child: Center(
-                          child: Focus(
-                            autofocus: true,
-                            onKeyEvent: (node, event) {
-                              if (event is KeyDownEvent &&
-                                  (event.logicalKey == LogicalKeyboardKey.select ||
-                                      event.logicalKey == LogicalKeyboardKey.enter)) {
+                      Expanded(
+                        flex: 6,
+                        child: Container(
+                          child: Center(
+                            child: Focus(
+                              autofocus: true,
+                              onKeyEvent: (node, event) {
+                                if (event is KeyDownEvent &&
+                                    (event.logicalKey == LogicalKeyboardKey.select ||
+                                        event.logicalKey == LogicalKeyboardKey.enter)) {
 
-                                setState(() {
-                                  isOn = !isOn;
-                                });
+                                  setState(() {
+                                    isOn = !isOn;
+                                  });
 
-                                return KeyEventResult.handled;
-                              }
-                              return KeyEventResult.ignored;
-                            },
-                            child: Switch(
-                              value: isOn,
-                              onChanged: (value) {
-                                setState(() {
-                                  isOn = value;
-                                });
+                                  final current = ref.read(themeProvider);   /// 🔥 ADDED
+
+                                  ref.read(themeProvider.notifier).state =
+                                  current == themeOne
+                                      ? themeTwo
+                                      : themeOne;   /// 🔥 ADDED
+
+                                  return KeyEventResult.handled;
+                                }
+                                return KeyEventResult.ignored;
                               },
-                              activeColor: Theme.of(context).brightness == Brightness.dark
-                                  ? Colors.black
-                                  : Colors.green,
-                              inactiveThumbColor: Colors.white,
-                              activeTrackColor: Theme.of(context).brightness == Brightness.dark
-                                  ? Colors.black54
-                                  : Colors.green.shade300,
-                              inactiveTrackColor: Colors.grey.shade400,
+                              child: Switch(
+                                value: isOn,
+                                onChanged: (value) {
+
+                                  setState(() {
+                                    isOn = value;
+                                  });
+
+                                  final current = ref.read(themeProvider);   /// 🔥 ADDED
+
+                                  ref.read(themeProvider.notifier).state =
+                                  current == themeOne
+                                      ? themeTwo
+                                      : themeOne;   /// 🔥 ADDED
+                                },
+                                activeColor: Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.black
+                                    : Colors.green,
+                                inactiveThumbColor: Colors.white,
+                                activeTrackColor: Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.black54
+                                    : Colors.green.shade300,
+                                inactiveTrackColor: Colors.grey.shade400,
+                              ),
                             ),
-                          )
-
-
-
-
-
-
+                          ),
                         ),
-                        
-                        
-                        
-                      )),
+                      ),
+
+                      // Expanded(flex: 6, child: Container(
+                      //   child: Center(
+                      //     child: Focus(
+                      //       autofocus: true,
+                      //       onKeyEvent: (node, event) {
+                      //         if (event is KeyDownEvent &&
+                      //             (event.logicalKey == LogicalKeyboardKey.select ||
+                      //                 event.logicalKey == LogicalKeyboardKey.enter)) {
+                      //
+                      //           setState(() {
+                      //             isOn = !isOn;
+                      //           });
+                      //
+                      //           return KeyEventResult.handled;
+                      //         }
+                      //         return KeyEventResult.ignored;
+                      //       },
+                      //       child: Switch(
+                      //         value: isOn,
+                      //         onChanged: (value) {
+                      //           onChanged: (value) {
+                      //
+                      //             final current = ref.read(themeProvider);
+                      //
+                      //             ref.read(themeProvider.notifier).state =
+                      //             current == themeOne
+                      //                 ? themeTwo
+                      //                 : themeOne;
+                      //           };
+                      //
+                      //         },
+                      //         activeColor: Theme.of(context).brightness == Brightness.dark
+                      //             ? Colors.black
+                      //             : Colors.green,
+                      //         inactiveThumbColor: Colors.white,
+                      //         activeTrackColor: Theme.of(context).brightness == Brightness.dark
+                      //             ? Colors.black54
+                      //             : Colors.green.shade300,
+                      //         inactiveTrackColor: Colors.grey.shade400,
+                      //       ),
+                      //     )
+                      //
+                      //
+                      //
+                      //
+                      //
+                      //
+                      //   ),
+                      //
+                      //
+                      //
+                      // )),
                     ],
                   ),
                 ),
               ),
 
               /// VERTICAL DIVIDER
-              Container(width: 1.w, color: Colors.white24),
+              Container(width: 1.w,
+                  color: theme.divider
+
+
+
+                //color: Colors.white24
+              ),
 
               /// RIGHT TIME SECTION
               Expanded(
@@ -263,7 +354,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                   padding: EdgeInsets.only(left: 2.w, right: 0.w),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0B0C10),
+                      color: theme.bg,
+
+                      //color: const Color(0xFF0B0C10),
                       borderRadius: BorderRadius.circular(15.r),
                     ),
                     child: Column(
@@ -278,7 +371,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 6.sp,
-                                    color: Colors.white70,
+                                      color: theme.subText
+
+                                    //color: Colors.white70,
                                   ),
                                 ),
                                 Text(
@@ -286,7 +381,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 7.sp,
-                                    color: Colors.white,
+                                      color: theme.text
+
+                                    //color: Colors.white,
                                   ),
                                 ),
                               ],
@@ -298,7 +395,11 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                           width: 180.h,
                           height: 1.w,
                           child: Center(
-                            child: Container(color: Colors.white24),
+                            child: Container(color:
+                             theme.divider
+
+                              //Colors.white24
+                            ),
                           ),
                         ),
 
@@ -321,7 +422,11 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                   style: TextStyle(
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                      color: theme.text
+
+
+
+                                    //color: Colors.white,
                                   ),
                                 );
                               },
@@ -339,7 +444,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 6.sp,
-                                    color: Colors.white70,
+                                      color: theme.subText
+
+                                    //color: Colors.white70,
                                   ),
                                 ),
                                 StreamBuilder<String>(
@@ -352,7 +459,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 9.sp,
-                                        color: Colors.white,
+                                          color: theme.text
+
+                                        //color: Colors.white,
                                       ),
                                     );
                                   },
@@ -366,7 +475,13 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                           width: 180.h,
                           height: 1.w,
                           child: Center(
-                            child: Container(color: Colors.white24),
+                            child: Container(
+                                color: theme.divider
+
+
+
+                              //color: Colors.white24
+                            ),
                           ),
                         ),
 
@@ -381,7 +496,10 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 6.sp,
-                                    color: Colors.white70,
+                                      color: theme.subText
+
+
+                                    //color: Colors.white70,
                                   ),
                                 ),
                               ),
@@ -391,7 +509,9 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 9.sp,
-                                    color: Colors.white,
+                                      color: theme.text
+
+                                    //color: Colors.white,
                                   ),
                                 ),
                               ),
@@ -409,11 +529,15 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                 topLeft: Radius.circular(15.r),
                                 topRight: Radius.circular(15.r),
                               ),
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFF1B1E25), Color(0xFF14161C)],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                              ),
+                                gradient: theme.boxGradient
+
+
+                              // gradient: const LinearGradient(
+                              //   colors: [Color(0xFF1B1E25), Color(0xFF14161C)],
+                              //   begin: Alignment.topCenter,
+                              //   end: Alignment.bottomCenter,
+                              // ),
+
                             ),
                             clipBehavior: Clip.hardEdge,
                             child: Row(
@@ -423,11 +547,13 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                   Icons.nightlight_round,
                                   prayer?.saheri ?? "--",
                                   "SEHRI",
+                                  theme
                                 ),
                                 infoColumn(
                                   Icons.restaurant,
                                   prayer?.iftar ?? "--",
                                   "IFTAR",
+                                  theme
                                 ),
                               ],
                             ),
@@ -436,7 +562,11 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
 
                         Container(
                           margin: EdgeInsets.only(left: 4.w),
-                          child: Divider(height: 2.h, color: Colors.white24),
+                          child: Divider(height: 2.h,
+                              color: theme.divider
+
+                            //color: Colors.white24
+                          ),
                         ),
 
                         Expanded(
@@ -448,14 +578,18 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                 bottomLeft: Radius.circular(15.r),
                                 bottomRight: Radius.circular(15.r),
                               ),
-                              gradient: const LinearGradient(
-                                colors: [
-                                  Color(0xFF1B1E25),
-                                  Color(0xFF14161C),
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                              ),
+                                gradient: theme.boxGradient
+
+
+
+                              // gradient: const LinearGradient(
+                              //   colors: [
+                              //     Color(0xFF1B1E25),
+                              //     Color(0xFF14161C),
+                              //   ],
+                              //   begin: Alignment.topCenter,
+                              //   end: Alignment.bottomCenter,
+                              // ),
                             ),
                             clipBehavior: Clip.hardEdge,
                             child: Row(
@@ -465,11 +599,13 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                   Icons.wb_sunny_outlined,
                                   prayer?.sunrise ?? "--",
                                   "SUNRISE",
+                                  theme
                                 ),
                                 infoColumn(
                                   Icons.brightness_3,
                                   prayer?.sunset ?? "--",
                                   "SUNSET",
+                                  theme
                                 ),
                               ],
                             ),
@@ -489,17 +625,49 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
   }
 }
 
-Widget infoColumn(IconData icon, String time, String label) {
+/// 🔥 theme_model.dart import korte hobe
+/// ADD THIS AT TOP OF FILE
+/// import 'theme_model.dart';
+
+
+
+Widget infoColumn(
+    IconData icon,
+    String time,
+    String label,
+    AppTheme theme,   /// 🔥 FIXED
+    )
+{
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Icon(icon, color: Colors.white70),
+      Icon(
+        icon,
+
+        // color: Colors.white70
+        color: theme.subText,   /// 🔥 CHANGED
+      ),
       SizedBox(height: 1),
-      Text(time, style: const TextStyle(color: Colors.white)),
-      Text(label, style: const TextStyle(color: Colors.white54, fontSize: 10)),
+
+      // Text(time, style: const TextStyle(color: Colors.white)),
+      Text(
+        time,
+        style: TextStyle(color: theme.text),   /// 🔥 CHANGED
+      ),
+
+      // Text(label, style: const TextStyle(color: Colors.white54, fontSize: 10)),
+      Text(
+        label,
+        style: TextStyle(
+          color: theme.subText,   /// 🔥 CHANGED
+          fontSize: 10,
+        ),
+      ),
     ],
   );
 }
+
+
 
 TableRow tableRow(List<String> data, double height, [bool isHeader = false]) {
   return TableRow(
@@ -526,25 +694,47 @@ TableRow tableRow(List<String> data, double height, [bool isHeader = false]) {
   );
 }
 
-TableRow tableRowUI(List<String> data, double height, bool header) {
+
+
+TableRow tableRowUI(
+    List<String> data,
+    double height,
+    bool header,
+    AppTheme theme,   /// 🔥 FIXED
+    )
+{
   return TableRow(
     children: List.generate(data.length, (index) {
       return Container(
         height: height,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF1B1E25), Color(0xFF14161C)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+
+          // gradient: const LinearGradient(
+          //   colors: [Color(0xFF1B1E25), Color(0xFF14161C)],
+          //   begin: Alignment.topCenter,
+          //   end: Alignment.bottomCenter,
+          // ),
+
+          gradient: theme.boxGradient,
+
+
           border: Border(
             top: header
                 ? BorderSide.none
-                : const BorderSide(color: Colors.white24, width: 1),
+            // : const BorderSide(color: Colors.white24, width: 1),
+                : BorderSide(
+              color: theme.divider,   /// 🔥 CHANGED
+              width: 1,
+            ),
+
             left: index == 0
                 ? BorderSide.none
-                : const BorderSide(color: Color(0xFF0B0C10), width: 1),
+            // : const BorderSide(color: Color(0xFF0B0C10), width: 1),
+                : BorderSide(
+              color: theme.bg,   /// 🔥 CHANGED
+              width: 1,
+            ),
           ),
         ),
         child: Text(
@@ -552,7 +742,12 @@ TableRow tableRowUI(List<String> data, double height, bool header) {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: header ? 6.sp : 7.sp,
-            color: header ? Colors.white70 : Colors.white,
+
+            // color: header ? Colors.white70 : Colors.white,
+            color: header
+                ? theme.subText   /// 🔥 CHANGED
+                : theme.text,     /// 🔥 CHANGED
+
             fontWeight: header ? FontWeight.w600 : FontWeight.w500,
           ),
         ),
@@ -560,6 +755,7 @@ TableRow tableRowUI(List<String> data, double height, bool header) {
     }),
   );
 }
+
 String cleanHadithText(String text) {
 
   return text
