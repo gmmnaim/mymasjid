@@ -23,7 +23,8 @@ class _AutoScrollTextState extends State<AutoScrollText> {
   Timer? _timer;
   int _scrollToken = 0;
 
-  @override
+  static const double secondsPerLine = 2.5; /// 🔥 SAME SPEED PER LINE (TV BEST)
+
   @override
   void initState() {
     super.initState();
@@ -32,7 +33,6 @@ class _AutoScrollTextState extends State<AutoScrollText> {
       startScrolling();
     });
   }
-
 
   @override
   void didUpdateWidget(covariant AutoScrollText oldWidget) {
@@ -54,7 +54,6 @@ class _AutoScrollTextState extends State<AutoScrollText> {
     }
   }
 
-
   void startScrolling() {
 
     final currentToken = _scrollToken;
@@ -67,11 +66,25 @@ class _AutoScrollTextState extends State<AutoScrollText> {
 
       if (maxScroll == 0) return;
 
+      /// 🔥 EXACT RENDERED LINE COUNT
+      final textPainter = TextPainter(
+        text: TextSpan(text: widget.text, style: widget.style),
+        textDirection: TextDirection.ltr,
+        maxLines: null,
+      )..layout(
+        maxWidth: _controller.position.viewportDimension,
+      );
+
+      final lineCount = textPainter.computeLineMetrics().length;
+
+      /// 🔥 SAME SPEED PER LINE
+      final duration = Duration(
+        milliseconds: (lineCount * secondsPerLine * 1000).toInt(),
+      );
+
       await _controller.animateTo(
         maxScroll,
-        duration: Duration(
-          seconds: ((widget.text.length ~/ 12).clamp(8, 40)),
-        ),
+        duration: duration,
         curve: Curves.linear,
       );
 

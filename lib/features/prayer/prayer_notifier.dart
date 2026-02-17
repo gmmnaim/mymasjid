@@ -7,15 +7,18 @@ import 'package:mymasjid/features/prayer/prayer_repository.dart';
 
 class PrayerNotifier extends StateNotifier<PrayerModel?> {
 
-  PrayerNotifier():super(null){
-    loadPrayer();         /// 🔵 DEVICE START
-    startAutoUpdate();    /// 🔵 20 MIN AUTO
+  PrayerNotifier() : super(null) {
+    loadPrayer();       /// 🔵 App Start API Call
+    startAutoUpdate();  /// 🔵 20 min loop
   }
 
   final repo = PrayerRepository();
   Timer? _timer;
+  int _token = 0;
 
   Future<void> loadPrayer() async {
+
+    print("🕌 Prayer API Called at: ${DateTime.now()}");
 
     try {
 
@@ -23,39 +26,42 @@ class PrayerNotifier extends StateNotifier<PrayerModel?> {
 
       if (mounted) {
         state = prayer;
+        print("🟢 Prayer Updated at: ${DateTime.now()}");
       }
 
     } catch (e) {
 
-      /// 🔴 API FAIL → LOAD FROM HIVE
       final offline = repo.box.get('latest');
 
       if (offline != null && mounted) {
         state = offline;
+        print("🔴 Prayer Offline Loaded");
       }
-
-      print("Offline Mode Active");
     }
   }
 
+  void startAutoUpdate() {
 
+    _timer?.cancel();   /// 🔥 prevent multi loop
 
-  void startAutoUpdate(){
+    final currentToken = _token;
 
-    _timer?.cancel();
+    _timer = Timer(const Duration(seconds:30), () async {
 
-    _timer = Timer.periodic(
-      const Duration(minutes:20),
-          (_)=> loadPrayer(),   /// 🔥 EVERY 20 MIN API TRY
-    );
+      if (currentToken != _token) return;
 
+      await loadPrayer();
+      startAutoUpdate();   /// 🔁 recursive safe
+    });
   }
+
 
   @override
   void dispose() {
+    _token++;        /// 🔥 cancel loop
     _timer?.cancel();
     super.dispose();
   }
-
 }
+
 

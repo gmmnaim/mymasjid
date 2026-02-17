@@ -563,7 +563,27 @@ TableRow tableRowUI(List<String> data, double height, bool header) {
 String cleanHadithText(String text) {
 
   return text
-      .replaceAll(RegExp(r'\n\s+'), '\n')   /// remove indent after newline
-      .replaceAll(RegExp(r'\s{2,}'), ' ')   /// remove double space
+
+  /// Fix 1.Not → 1. Not
+      .replaceAllMapped(
+    RegExp(r'(\d+)\.(\S)'),
+        (m) => '${m[1]}. ${m[2]}',
+  )
+
+  /// Break before every new number (space / comma / newline safe)
+      .replaceAllMapped(
+    RegExp(r'[,\s]+(\d+)\.\s'),
+        (m) => '\n${m[1]}. ',
+  )
+
+  /// Remove indent
+      .replaceAll(RegExp(r'\n\s+'), '\n')
+
+  /// Remove multiple spaces
+      .replaceAll(RegExp(r'\s{2,}'), ' ')
+
       .trim();
 }
+
+
+
