@@ -23,13 +23,6 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
   void initState() {
     super.initState();
 
-    Future.microtask(() {
-      ref.read(prayerProvider.notifier).loadPrayer();
-    });
-
-    Future.microtask(() {
-      ref.read(hadithProvider.notifier).loadHadith();
-    });
 
 
 
@@ -96,9 +89,10 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                               ),
 
                               Expanded(
-                                child: Center(
+                                child: SizedBox(
+                                  width: double.infinity,
                                   child: AutoScrollText(
-                                    text: hadith?.hadithEnglish ?? "",
+                                    text: cleanHadithText(hadith?.hadithEnglish ?? ""),
                                     style: TextStyle(
                                       fontSize: 9.sp,
                                       fontWeight: FontWeight.w500,
@@ -108,6 +102,21 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                   ),
                                 ),
                               ),
+
+
+                              // Expanded(
+                              //   child: Center(
+                              //     child: AutoScrollText(
+                              //       text: hadith?.hadithEnglish ?? "",
+                              //       style: TextStyle(
+                              //         fontSize: 9.sp,
+                              //         fontWeight: FontWeight.w500,
+                              //         color: Colors.white,
+                              //         height: 1.4,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
 
                               Text(
                                 hadith?.bookSlug ?? "",
@@ -550,4 +559,11 @@ TableRow tableRowUI(List<String> data, double height, bool header) {
       );
     }),
   );
+}
+String cleanHadithText(String text) {
+
+  return text
+      .replaceAll(RegExp(r'\n\s+'), '\n')   /// remove indent after newline
+      .replaceAll(RegExp(r'\s{2,}'), ' ')   /// remove double space
+      .trim();
 }

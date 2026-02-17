@@ -17,16 +17,28 @@ class PrayerNotifier extends StateNotifier<PrayerModel?> {
 
   Future<void> loadPrayer() async {
 
-    try{
+    try {
 
       final prayer = await repo.getPrayer();
-      state = prayer;
 
-    }catch(e){
+      if (mounted) {
+        state = prayer;
+      }
+
+    } catch (e) {
+
+      /// 🔴 API FAIL → LOAD FROM HIVE
+      final offline = repo.box.get('latest');
+
+      if (offline != null && mounted) {
+        state = offline;
+      }
+
       print("Offline Mode Active");
     }
-
   }
+
+
 
   void startAutoUpdate(){
 

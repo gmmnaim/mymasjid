@@ -9,33 +9,42 @@ class HadithRepository {
 
   Future<HadithModel> getHadith() async {
 
-    try{
+    try {
 
       final list = await service.fetchHadithList();
 
       final hadithList = list
-          .map((e)=>HadithModel.fromJson(e))
+          .map((e) => HadithModel.fromJson(e))
           .toList();
 
-      /// SKIP LARGE HADITH
-      final filtered = hadithList.firstWhere(
-              (h)=> h.hadithEnglish.length < 350
-      );
+      // hadithList.removeWhere(
+      //       (h) => h.hadithEnglish.length >= 350,
+      // );
 
+      hadithList.shuffle();   /// 🔥 RANDOMIZE
+
+      final filtered = hadithList.first;
+      ;
+
+      /// 🧨 DELETE OLD HADITH
+      await box.clear();
+
+      /// 🟢 SAVE NEW HADITH
       await box.put('latest', filtered);
 
       return filtered;
 
-    }catch(e){
+    } catch (e) {
 
-      /// OFFLINE MODE
+      /// 🔴 OFFLINE MODE
       final offline = box.get('latest');
 
-      if(offline!=null){
+      if (offline != null) {
         return offline;
-      }else{
-        throw Exception("No Hadith Found");
+      } else {
+        throw Exception("No Hadith Found in Hive");
       }
     }
   }
+
 }

@@ -23,13 +23,18 @@ class AutoStartService : Service() {
                 addFlags(
                     Intent.FLAG_ACTIVITY_NEW_TASK or
                             Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                            Intent.FLAG_ACTIVITY_SINGLE_TOP
+                            Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                            Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or
+                            Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT   /// 🔥 FINAL TV FIX
                 )
             }
 
-            startActivity(launchIntent)
 
-        }, 5000)
+            startActivity(launchIntent)
+            stopForeground(false)
+            stopSelf()
+
+        }, 3000)
 
         return START_STICKY
     }
@@ -40,9 +45,12 @@ class AutoStartService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("MyMasjid Running")
             .setContentText("Auto start service active")
-            .setSmallIcon(android.R.drawable.ic_media_play)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setOngoing(true)
             .build()
     }
+
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

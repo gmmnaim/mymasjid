@@ -18,25 +18,37 @@ class HadithNotifier extends StateNotifier<HadithModel?> {
 
   Future<void> loadHadith() async {
 
-    try{
-      final hadith = await repo.getHadith();
-      state = hadith;
-    }catch(e){
-      print("Hadith Offline Mode Active");
-    }
+    print("📖 Hadith API Called at: ${DateTime.now()}");
 
+    try {
+
+      final hadith = await repo.getHadith();
+
+      if (mounted) {
+        state = hadith;
+        print("🟢 Hadith Updated at: ${DateTime.now()}");
+      }
+
+    } catch (e) {
+
+      print("🔴 Hadith Offline Loaded at: ${DateTime.now()}");
+    }
   }
 
-  void startAutoUpdate(){
+
+
+  void startAutoUpdate() {
 
     _timer?.cancel();
 
     _timer = Timer.periodic(
-      const Duration(minutes:10),
-          (_)=> loadHadith(),
+      const Duration(seconds: 30),
+          (_) async {
+        await loadHadith();
+      },
     );
-
   }
+
 
   @override
   void dispose() {

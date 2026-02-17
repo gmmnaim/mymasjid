@@ -20,10 +20,11 @@ void main() async {
 
   await Hive.openBox<PrayerModel>('prayerBox');
 
+  await WakelockPlus.enable();
 
+  SystemChannels.platform.invokeMethod(
+      'SystemNavigator.setFrameworkHandlesBack', true);
 
-  //await Hive.openBox('prayer_box');
-  //await WakelockPlus.enable();
 
 
   await SystemChrome.setPreferredOrientations([

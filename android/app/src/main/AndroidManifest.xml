@@ -4,17 +4,21 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+
 
     <application
         android:label="mymasjid"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        android:directBootAware="true">
 
-        <activity
+
+    <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
@@ -31,8 +35,14 @@
             <!-- Launcher intact -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
+                <!-- 📺 REQUIRED FOR TV -->
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
+
+                <!-- Mobile fallback -->
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
 
         </activity>
 
@@ -41,9 +51,10 @@
             android:name=".BootReceiver"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            android:directBootAware="true">
 
-            <intent-filter android:priority="1000">
+
+        <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED"/>
             </intent-filter>
@@ -54,7 +65,9 @@
             android:name=".AutoStartService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="mediaPlayback"/>
+            android:directBootAware="true"
+            android:foregroundServiceType="specialUse"/>
+
 
         <!-- Flutter embedding -->
         <meta-data
