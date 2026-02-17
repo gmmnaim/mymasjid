@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +24,12 @@ class MyMasjid extends ConsumerStatefulWidget {
 }
 
 class _MyMasjidState extends ConsumerState<MyMasjid> {
+  bool isPressing = false;   /// 🔥 ADD THIS
+
+  final FocusNode switchFocus = FocusNode();   /// 🔥 ADD THIS
+  bool showSwitch = false;     /// 🔥 SWITCH VISIBILITY
+  Timer? holdTimer;            /// 🔥 LONG PRESS TIMER
+
   bool isOn = false;
   @override
   void initState() {
@@ -31,6 +39,12 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
 
 
   }
+  @override
+  void dispose() {
+    switchFocus.dispose();   /// 🔥
+    super.dispose();
+  }
+
 
   Stream<DateTime> getTimeStream() {
     return Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
@@ -151,7 +165,7 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
 
                       /// PRAYER TABLE SECTION
                       Expanded(
-                        flex: 7,
+                        flex: 9,
                         child: Container(
                           margin: EdgeInsets.only(top: 2.w, right: 4.w),
                           decoration: BoxDecoration(
@@ -227,62 +241,88 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                         ),
                       ),
                       Expanded(
-                        flex: 6,
-                        child: Container(
-                          child: Center(
-                            child: Focus(
-                              autofocus: true,
-                              onKeyEvent: (node, event) {
-                                if (event is KeyDownEvent &&
-                                    (event.logicalKey == LogicalKeyboardKey.select ||
-                                        event.logicalKey == LogicalKeyboardKey.enter)) {
+                        flex: 2,
+                        child: Focus(
+                          autofocus: true,
+                          onKeyEvent: (node, event) {
+
+                            if (event.logicalKey == LogicalKeyboardKey.select ||
+                                event.logicalKey == LogicalKeyboardKey.enter) {
+
+                              /// KEY DOWN → START HOLD
+                              if (event is KeyDownEvent && !isPressing) {
+
+                                isPressing = true;
+
+                                holdTimer = Timer(const Duration(seconds: 2), () {
 
                                   setState(() {
-                                    isOn = !isOn;
+                                    showSwitch = !showSwitch;   /// 🔥 TOGGLE
                                   });
 
-                                  final current = ref.read(themeProvider);   /// 🔥 ADDED
+                                  if (showSwitch) {
+                                    Future.microtask(() {
+                                      switchFocus.requestFocus();   /// 🔥 FOCUS WHEN SHOW
+                                    });
+                                  }
 
-                                  ref.read(themeProvider.notifier).state =
-                                  current == themeOne
-                                      ? themeTwo
-                                      : themeOne;   /// 🔥 ADDED
+                                });
+                              }
 
-                                  return KeyEventResult.handled;
-                                }
-                                return KeyEventResult.ignored;
-                              },
-                              child: Opacity(
-                                opacity: 0,
-                                child: Switch(
-                                  value: isOn,
-                                  onChanged: (value) {
+                              /// KEY UP
+                              if (event is KeyUpEvent) {
+
+                                /// SHORT CLICK
+                                if (holdTimer != null && holdTimer!.isActive) {
+
+                                  if (showSwitch) {
 
                                     setState(() {
-                                      isOn = value;
+                                      isOn = !isOn;
                                     });
 
-                                    final current = ref.read(themeProvider);   /// 🔥 ADDED
+                                    final current = ref.read(themeProvider);
 
                                     ref.read(themeProvider.notifier).state =
                                     current == themeOne
                                         ? themeTwo
-                                        : themeOne;   /// 🔥 ADDED
-                                  },
-                                  activeColor: Theme.of(context).brightness == Brightness.dark
-                                      ? Colors.black
-                                      : Colors.green,
-                                  inactiveThumbColor: Colors.white,
-                                  activeTrackColor: Theme.of(context).brightness == Brightness.dark
-                                      ? Colors.black54
-                                      : Colors.green.shade300,
-                                  inactiveTrackColor: Colors.grey.shade400,
+                                        : themeOne;
+                                  }
+                                }
+
+                                isPressing = false;
+                                holdTimer?.cancel();
+                                holdTimer = null;
+                              }
+
+                              return KeyEventResult.handled;
+                            }
+
+                            return KeyEventResult.ignored;
+                          },
+
+                          child: Center(
+                            child: Visibility(
+                              visible: showSwitch,
+                              child: Focus(
+                                focusNode: switchFocus,
+                                child: Transform.scale(
+                                  scale: 0.4,
+                                  child: Switch(
+                                    value: isOn,
+                                    onChanged: (_) {},
+                                    activeColor: Colors.green,
+                                    inactiveThumbColor: Colors.white,
+                                    activeTrackColor: Colors.green.shade300,
+                                    inactiveTrackColor: Colors.grey.shade400,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
+
 
                       // Expanded(flex: 6, child: Container(
                       //   child: Center(
@@ -489,7 +529,7 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                         ),
 
                         Expanded(
-                          flex: 12,
+                          flex: 10,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -573,7 +613,7 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                         ),
 
                         Expanded(
-                          flex: 9,
+                          flex: 10,
                           child: Container(
                             margin: EdgeInsets.only(left: 4.w),
                             decoration: BoxDecoration(

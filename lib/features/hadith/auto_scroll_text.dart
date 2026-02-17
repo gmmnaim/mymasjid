@@ -22,8 +22,11 @@ class _AutoScrollTextState extends State<AutoScrollText> {
 
   Timer? _timer;
   int _scrollToken = 0;
+  static const double wordsPerMinute = 160;   /// 🔥 TV READING SPEED
 
-  static const double secondsPerLine = 2.5; /// 🔥 SAME SPEED PER LINE (TV BEST)
+
+
+  //static const double secondsPerLine = 2.5; /// 🔥 SAME SPEED PER LINE (TV BEST)
 
   @override
   void initState() {
@@ -75,12 +78,14 @@ class _AutoScrollTextState extends State<AutoScrollText> {
         maxWidth: _controller.position.viewportDimension,
       );
 
-      final lineCount = textPainter.computeLineMetrics().length;
+      final wordCount = widget.text.split(RegExp(r'\s+')).length;
 
-      /// 🔥 SAME SPEED PER LINE
+      final seconds = (wordCount / wordsPerMinute) * 60;
+
       final duration = Duration(
-        milliseconds: (lineCount * secondsPerLine * 1000).toInt(),
+        milliseconds: (seconds * 1000).toInt(),
       );
+
 
       await _controller.animateTo(
         maxScroll,
@@ -114,7 +119,7 @@ class _AutoScrollTextState extends State<AutoScrollText> {
       physics: const NeverScrollableScrollPhysics(),
       child: Text(
         widget.text,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.left,
         style: widget.style,
       ),
     );

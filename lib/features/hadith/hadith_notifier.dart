@@ -42,7 +42,7 @@ class HadithNotifier extends StateNotifier<HadithModel?> {
     _timer?.cancel();
 
     _timer = Timer.periodic(
-      const Duration(minutes: 5),
+      const Duration(minutes: 10),
           (_) async {
         await loadHadith();
       },
