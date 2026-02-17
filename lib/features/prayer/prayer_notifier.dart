@@ -46,7 +46,7 @@ class PrayerNotifier extends StateNotifier<PrayerModel?> {
 
     final currentToken = _token;
 
-    _timer = Timer(const Duration(seconds:30), () async {
+    _timer = Timer(const Duration(minutes: 20), () async {
 
       if (currentToken != _token) return;
 

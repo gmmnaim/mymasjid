@@ -252,29 +252,32 @@ class _MyMasjidState extends ConsumerState<MyMasjid> {
                                 }
                                 return KeyEventResult.ignored;
                               },
-                              child: Switch(
-                                value: isOn,
-                                onChanged: (value) {
+                              child: Opacity(
+                                opacity: 0,
+                                child: Switch(
+                                  value: isOn,
+                                  onChanged: (value) {
 
-                                  setState(() {
-                                    isOn = value;
-                                  });
+                                    setState(() {
+                                      isOn = value;
+                                    });
 
-                                  final current = ref.read(themeProvider);   /// 🔥 ADDED
+                                    final current = ref.read(themeProvider);   /// 🔥 ADDED
 
-                                  ref.read(themeProvider.notifier).state =
-                                  current == themeOne
-                                      ? themeTwo
-                                      : themeOne;   /// 🔥 ADDED
-                                },
-                                activeColor: Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.black
-                                    : Colors.green,
-                                inactiveThumbColor: Colors.white,
-                                activeTrackColor: Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.black54
-                                    : Colors.green.shade300,
-                                inactiveTrackColor: Colors.grey.shade400,
+                                    ref.read(themeProvider.notifier).state =
+                                    current == themeOne
+                                        ? themeTwo
+                                        : themeOne;   /// 🔥 ADDED
+                                  },
+                                  activeColor: Theme.of(context).brightness == Brightness.dark
+                                      ? Colors.black
+                                      : Colors.green,
+                                  inactiveThumbColor: Colors.white,
+                                  activeTrackColor: Theme.of(context).brightness == Brightness.dark
+                                      ? Colors.black54
+                                      : Colors.green.shade300,
+                                  inactiveTrackColor: Colors.grey.shade400,
+                                ),
                               ),
                             ),
                           ),
